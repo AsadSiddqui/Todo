@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table  align='center' cellspacing=2 cellpadding=5 id="data_table" border=1>        
+        <tr>
+            <th>Name</th>
+            <th >Age</th>
+            <th >Action</th>            
+
+        </tr>
+        <tbody id="list"></tbody>
+    </table>
+    <form onsubmit="return false">
+        <input type="text" id="inp" placeholder="Enter Name">
+        <input type="text" id="sec" placeholder="Enter age">
+        <button id="sub" onclick="act()">SUBMIT</button>
+    </form>
+</body>
+<script>
+    const arr = []
+    function act() {
+        var val = document.getElementById("inp").value
+        var vag = document.getElementById("sec").value
+        var g = {  name: val, age: vag }
+        arr.push(g)
+        document.getElementsByClassName('h1')
+        document.getElementById("inp").value = ""
+        document.getElementById("sec").value = ""
+        render()
+    }
+    function render() {
+    
+        document.getElementById("list").innerHTML = ''
+        for (let i = 0; i < arr.length; i++) {
+            document.getElementById("list").innerHTML += (`<tr><td><span class='editCls'>${arr[i].name}</span></td>  <td><span class='editr'>${arr[i].age}</span></td> <td><button id="editId" onclick="edit(event, ${i})">EDIT</button> <button id="delId" onclick="del(event , ${i})">DELETE</button> </td></tr>`)
+        }
+    }
+    function del(a, i) {
+        arr.splice(i, 1)
+        document.getElementById("sub").onclick = function sub(event) { act(event, i) }
+        document.getElementById("sub").innerHTML = "SUBMIT"
+        document.getElementById("inp").value = ''
+        render()
+    }
+    function edit(b, i) {
+        document.getElementById("inp").value = document.getElementsByClassName("editCls")[i].innerHTML
+        document.getElementById("sec").value = document.getElementsByClassName("editr")[i].innerHTML
+        document.getElementById("sub").innerHTML = "UPDATE"
+        document.getElementById("sub").onclick = function update1(event) { update(event, i) }
+    }
+    function update(c, i) {
+        document.getElementById("sub").innerHTML = "SUBMIT"
+        arr[i].name = document.getElementById("inp").value
+        arr[i].age = document.getElementById("sec").value
+        document.getElementById("inp").value = ''
+        document.getElementById("sub").onclick = function sub(event) { act(event, i) }
+        render()
+    }
+</script>
+
+</html>
